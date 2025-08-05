@@ -23,7 +23,8 @@ module "kyverno" {
   operator_user   = var.bastion_user
   ssh_private_key = tls_private_key.stack_key.private_key_openssh
   deploy_from_operator = true
-  deploy_from_local    = local.deploy_from_local
+  #deploy_from_local    = local.deploy_from_local
+  deploy_from_local    = false
   deployment_name     = "kyverno"
   helm_chart_name     = "kyverno"
   namespace           = "kyverno"
