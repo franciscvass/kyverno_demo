@@ -10,45 +10,40 @@ locals {
 
 data "oci_containerengine_cluster_kube_config" "kube_config" {
   count = local.deploy_from_local ? 1 : 0
-
-  #cluster_id = var.create_cluster ? module.oke.cluster_id : var.cluster_id
+# cluster_id = var.create_cluster ? module.oke.cluster_id : var.cluster_id
   cluster_id = module.oke.cluster_id
-  endpoint   = "PUBLIC_ENDPOINT"
+  endpoint   = "PRIVATE_ENDPOINT"
 }
 
 module "kyverno" {
   source = "./helm-module"
-
   bastion_host    = module.oke.bastion_public_ip
   bastion_user    = var.bastion_user
   operator_host   = module.oke.operator_private_ip
   operator_user   = var.bastion_user
   ssh_private_key = tls_private_key.stack_key.private_key_openssh
-
   deploy_from_operator = true
   deploy_from_local    = local.deploy_from_local
-
   deployment_name     = "kyverno"
   helm_chart_name     = "kyverno"
   namespace           = "kyverno"
   helm_repository_url = "https://kyverno.github.io/kyverno/"
-
   pre_deployment_commands  = []
   post_deployment_commands = []
   deployment_extra_args    = ["--wait"]
-
+  helm_template_values_override = ""
   #helm_template_values_override = templatefile(
   #  "${path.root}/helm-values-templates/nginx-values.yaml.tpl",
   #  {
   #    min_bw         = 100,
   #    max_bw         = 100,
-  #    pub_lb_nsg_id  = module.oke.pub_lb_nsg_id
-  #    state_id       = local.state_id
+  #    pub_lb_nsg_id  = module.oke.pub_lb_nsg_id,
+  #    state_id       = local.state_id,
   #    #create_cluster = var.create_cluster
   #  }
   #)
   #helm_user_values_override = try(base64decode(var.nginx_user_values_override), var.nginx_user_values_override)
-
+  helm_user_values_override = ""
   kube_config = one(data.oci_containerengine_cluster_kube_config.kube_config.*.content)
   depends_on  = [module.oke]
 }
