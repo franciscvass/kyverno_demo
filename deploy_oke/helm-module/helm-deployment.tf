@@ -130,7 +130,7 @@ resource "null_resource" "helm_deployment_via_operator" {
     ]
   }
 
-  depends_on = [null_resource.copy_chart_top_operator]
+  #depends_on = [null_resource.copy_chart_top_operator]
 }
 
 
