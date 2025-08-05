@@ -52,16 +52,16 @@ resource "null_resource" "copy_chart_top_operator" {
 resource "null_resource" "helm_deployment_via_operator" {
   count = var.deploy_from_operator ? 1 : 0
 
-  triggers = {
-    manifest_md5    = try(md5("${var.helm_template_values_override}-${var.helm_user_values_override}"), null)
-    deployment_name = var.deployment_name
-    namespace       = var.namespace
-    bastion_host    = var.bastion_host
-    bastion_user    = var.bastion_user
-    ssh_private_key = var.ssh_private_key
-    operator_host   = var.operator_host
-    operator_user   = var.operator_user
-  }
+ #triggers = {
+ #  manifest_md5    = try(md5("${var.helm_template_values_override}-${var.helm_user_values_override}"), null)
+ #  deployment_name = var.deployment_name
+ #  namespace       = var.namespace
+ #  bastion_host    = var.bastion_host
+ #  bastion_user    = var.bastion_user
+ #  ssh_private_key = var.ssh_private_key
+ #  operator_host   = var.operator_host
+ #  operator_user   = var.operator_user
+ #}
 
   connection {
     bastion_host        = self.triggers.bastion_host
