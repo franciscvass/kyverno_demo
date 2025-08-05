@@ -11,11 +11,6 @@ provider "oci" {
 }
 
 module "oke" {
-  cluster_autoscaler_install           = true
-cluster_autoscaler_namespace         = "kube-system"
-cluster_autoscaler_helm_version      = "9.48.0"
-cluster_autoscaler_helm_values       = {}
-cluster_autoscaler_helm_values_files = []
 
   source  = "oracle-terraform-modules/oke/oci"
   #version = "5.1.0"
@@ -25,7 +20,7 @@ cluster_autoscaler_helm_values_files = []
                             oci = oci }
   compartment_id        = "ocid1.compartment.oc1..aaaaaaaars7ft6qwfjeft6c2yo35copu7plbgvjyzooqcgqqb2l2negsww4q"
   
-  bastion_allowed_cidrs = ["92.180.8.168/32", "81.196.248.155/32", "5.12.3.129/32"]
+  bastion_allowed_cidrs = ["92.180.8.168/32"]
 
   operator_image_type = "platform"
   #operator_image_os = "Oracle Autonomous Linux"
@@ -45,7 +40,7 @@ cluster_autoscaler_helm_values_files = []
   #bastion_image_id    = "ocid1.image.oc1.eu-frankfurt-1.aaaaaaaakc66dq6s6qyyrgptgbrxfjzwkqrubenkqmjmxhpyn7wuczrwr3ya"
   
   create_vcn            = true
-  vcn_name              = "OKE-VCN"
+  vcn_name              = "OKE-VCN-KYVERNO"
   #vcn_id                = "ocid1.vcn.oc1.eu-frankfurt-1.amaaaaaawe6j4fqaamskaf3qmh5baewf6m6nlvnphhblumbz3tylewnxsmca"
   
   # if use existent vcn
@@ -56,7 +51,7 @@ cluster_autoscaler_helm_values_files = []
   ssh_public_key_path   = "/Users/fvass/.ssh/id_rsa.pub"
   
 
-  cluster_name          = "oke-git"
+  cluster_name          = "kyverno-cluster-demo"
   cluster_type          = "enhanced"
   cni_type              = "npn"
   # node pool
@@ -86,11 +81,4 @@ output "operator_private_ip" {
 output "ssh_to_operator" {
   value = module.oke.ssh_to_operator
 }
-
-
-#output "worker_pools" {
-#  value = module.oke.worker_pools
-#}
-#
-
 
