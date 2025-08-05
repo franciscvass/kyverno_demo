@@ -1,12 +1,12 @@
 
 provider "oci" {
-  config_file_profile = "ION-FRA"
+  config_file_profile = "ION_FRA"
   region           = "eu-frankfurt-1"
   alias = "home"
 }
 
 provider "oci" {
-  config_file_profile = "ION-FRA"
+  config_file_profile = "ION_FRA"
   region           = "eu-frankfurt-1"
 }
 
@@ -47,9 +47,10 @@ module "oke" {
   #ig_route_table_id     = "ocid1.routetable.oc1.eu-frankfurt-1.aaaaaaaaj6jfo4eoi5uc2mvmvc5f63shupybip555ehceyf3y7qq5a2pvfaq"
   #nat_route_table_id    = "ocid1.routetable.oc1.eu-frankfurt-1.aaaaaaaaofqgsznw7auahltt7hovk24k67embuiyvdctpkmmjtplfu4wmmoa"
   
-  ssh_private_key_path  = "/Users/fvass/.ssh/id_rsa"
-  ssh_public_key_path   = "/Users/fvass/.ssh/id_rsa.pub"
-  
+  #ssh_private_key_path  = "/Users/fvass/.ssh/id_rsa"
+  #ssh_public_key_path   = "/Users/fvass/.ssh/id_rsa.pub"
+  ssh_private_key_path  = var.ssh_private_key_path
+  ssh_public_key_path   = var.ssh_public_key_path
 
   cluster_name          = "kyverno-cluster-demo"
   cluster_type          = "enhanced"
@@ -65,6 +66,8 @@ module "oke" {
   #    "DynamicGroup.Application" = "yes"
   #  }
 }
+
+
 
 output "apiserver_private_host" {
   value = module.oke.apiserver_private_host
@@ -82,3 +85,6 @@ output "ssh_to_operator" {
   value = module.oke.ssh_to_operator
 }
 
+output "pix" {
+  value = module.kyverno.pix
+}
