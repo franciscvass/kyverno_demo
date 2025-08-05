@@ -22,5 +22,13 @@ https://www.youtube.com/watch?v=MxGAuVsJBXE&t=6s
 
 <img width="1291" height="636" alt="image" src="https://github.com/user-attachments/assets/fa249b7d-a1ad-4270-a7d6-baaec6e34220" />
 
+## manual Install
+```
+helm repo add kyverno https://kyverno.github.io/kyverno/
+helm repo update
+helm install kyverno kyverno/kyverno -n kyverno --create-namespace
+```
 
-
+```
+kubectl get policyreport
+```

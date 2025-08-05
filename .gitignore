@@ -1,0 +1,3 @@
+.terraform*
+deploy_oke/.terraform*
+deploy_oke/terraform.tfstate*
