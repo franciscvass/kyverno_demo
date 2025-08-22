@@ -2,8 +2,7 @@
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl
 
 locals {
-  user_public_ssh_key     = chomp(file(var.ssh_public_key_path))
-  
+  user_public_ssh_key     = chomp(var.ssh_public_key)
   bundled_ssh_public_keys = "${local.user_public_ssh_key}\n${chomp(tls_private_key.stack_key.public_key_openssh)}"
 }
 

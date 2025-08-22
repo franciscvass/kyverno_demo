@@ -1,9 +1,10 @@
 apiVersion: kyverno.io/v1
-kind: ClusterPolicy 
+kind: Policy 
 metadata:
-    name: require-deployment-team-label
+    name: validation-for-deployment
+    namespace: demo
 spec:
-    validationFailureAction: Enforce
+    validationFailureAction: Enforce # Audit
     rules:
       - name: check-for-team-label
         match:

@@ -9,7 +9,7 @@ spec:
       any:
       - resources:
           kinds:
-          - Pod
+          - Deployment
     mutate:
       patchStrategicMerge:
         metadata: 

@@ -1,9 +1,9 @@
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy 
 metadata:
-    name: require-deployment-team-label
+    name: validation-for-deployment
 spec:
-    validationFailureAction: Enforce
+    validationFailureAction: Enforce # Audit
     rules:
       - name: check-for-team-label
         match:
@@ -17,3 +17,14 @@ spec:
              metadata:
                labels:
                  team: "?*"
+      - name: check-for-replica
+        match:
+          any:
+            - resources:
+                kinds:
+                 - Deployment
+        validate:
+           message: "The replica must set to >=3"
+           pattern:
+             spec:
+               replicas: ">=3" 

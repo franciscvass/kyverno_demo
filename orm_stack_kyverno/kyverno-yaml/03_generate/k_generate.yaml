@@ -4,18 +4,17 @@ metadata:
   name: sync-secrets
 spec:
   rules:
-  - name: sync-image-pull-secret
+  - name: sync-secret
     match:
-      any:
-        - resources:
-          kinds:
-            - Namespace 
+      resources:
+        kinds:
+          - Namespace 
     generate:
       apiVersion: v1 
       kind: Secret 
       name: regcred
-      namespace: "{{request.object.metadata. name}}"
+      namespace: "{{request.object.metadata.name}}"
       synchronize: true 
       clone:
-        namespace: kyverno-policy-tests
+        namespace: default
         name: regcred
